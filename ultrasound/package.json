@@ -1,0 +1,16 @@
+{
+  "name": "ultrasound",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "browserify": "browserify main.js -o build/bundle.js",
+    "start": "watch 'npm run browserify' ."
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^11.0.1",
+    "watch": "^0.16.0"
+  }
+}

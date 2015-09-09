@@ -1,0 +1,88 @@
+.sonic-demo-wrapper{
+  display: flex;
+  flex-flow: row wrap;
+  outline: 1px solid red;
+}
+
+#symbol-preview{
+  height: 300px;
+  flex: 1 1 0;
+  min-width: 300px;
+}
+
+@media screen and (min-width: 600px){
+  .symbol-container{
+    order: -1;
+  }
+}
+
+.symbol-container{
+  display: flex;
+  flex-flow: row wrap;
+  flex: 1 1 0;
+  min-width: 300px;
+  height: 300px;
+}
+
+.symbol{
+  flex: 1 1 30%;
+  cursor: pointer;
+}
+
+.symbol--1{
+  background-color: pink;
+}
+
+.symbol--2{
+  background-color: royalblue;
+}
+
+.symbol--3{
+  background-color: lightgreen;
+}
+
+.symbol--4{
+  background-color: papayawhip;
+}
+
+.symbol--5{
+  background-color: violet;
+}
+
+.symbol--6{
+  background-color: cyan;
+}
+
+.symbol--pending{
+  background-color: gray;
+}
+.symbol--pending::before{
+  content: "Listening ..."
+}
+
+/* Toggle */
+
+.toggle{
+  border: 1px solid #8BC34A;
+  display: inline-flex;
+}
+
+.toggle__option{
+  flex: 1 1 100px;
+  cursor: pointer;
+}
+
+.toggle__option span{
+  display: block;
+  padding: 1em 2em;
+}
+
+.toggle__option input{
+  position: absolute;
+  left: -999em;
+}
+
+.toggle__option input:checked + span{
+  background: #8BC34A;
+  color: #fff;
+}
