@@ -5,12 +5,14 @@
   "main": "main.js",
   "scripts": {
     "browserify": "browserify main.js -o build/bundle.js",
+    "server": "http-server . -p9292 -o --slilent",
     "start": "watch 'npm run browserify' ."
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "browserify": "^11.0.1",
+    "http-server": "^0.8.0",
     "watch": "^0.16.0"
   }
 }
