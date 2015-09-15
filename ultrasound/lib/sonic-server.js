@@ -62,6 +62,10 @@ SonicServer.prototype.on = function(event, callback) {
   if (event == 'message') {
     this.callbacks.message = callback;
   }
+
+  if (event == 'character') {
+    this.callbacks.character = callback;
+  }
 };
 
 SonicServer.prototype.setDebug = function(value) {
@@ -192,6 +196,7 @@ SonicServer.prototype.analysePeaks = function() {
         char != this.coder.startChar && char != this.coder.endChar) {
       this.buffer += char;
       this.lastChar = char;
+      this.fire_(this.callbacks.character, char);
     }
     // Also look for the end character to go into idle mode.
     if (char == this.coder.endChar) {
@@ -234,15 +239,16 @@ SonicServer.prototype.debugDraw_ = function() {
   canvas.width = document.body.offsetWidth;
   canvas.height = 480;
   drawContext = canvas.getContext('2d');
+
   // Plot the frequency data.
-  for (var i = 0; i < this.freqs.length; i++) {
+  for (var i = 0; i < this.freqs.length; i += 5) {
     var value = this.freqs[i];
     // Transform this value (in db?) into something that can be plotted.
-    var height = value + 400;
-    var offset = canvas.height - height - 1;
+    var height = value + 300;
+    var offset = canvas.height - height;
     var barWidth = canvas.width/this.freqs.length;
     drawContext.fillStyle = 'black';
-    drawContext.fillRect(i * barWidth, offset, 1, 1);
+    drawContext.fillRect(i * barWidth, offset, 6, height);
   }
 };
 
