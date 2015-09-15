@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Ultrasound Demo</title>
   <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
@@ -23,29 +24,27 @@
 
     </form>
 
+    <form action="#" data-message-form>
+      <input type="text" name="msg" id="msg" />
+      <button>Send</button>
+    </form>
+
     <div class="sonic-demo-wrapper">
 
       <div id="symbol-preview" class="symbol--pending" data-symbol-preview></div>
 
       <form action="#" class="symbol-container" data-symbol-container>
-        <label for="sym1" class="symbol symbol--1">
-          <input type="radio" name="symbol" id="sym1" value="symbol--1" />
-        </label>
-        <label for="sym2" class="symbol symbol--2">
-          <input type="radio" name="symbol" id="sym2" value="symbol--2" />
-        </label>
-        <label for="sym3" class="symbol symbol--3">
-          <input type="radio" name="symbol" id="sym3" value="symbol--3" />
-        </label>
-        <label for="sym4" class="symbol symbol--4">
-          <input type="radio" name="symbol" id="sym4" value="symbol--4" />
-        </label>
-        <label for="sym5" class="symbol symbol--5">
-          <input type="radio" name="symbol" id="sym5" value="symbol--5" />
-        </label>
-        <label for="sym6" class="symbol symbol--6">
-          <input type="radio" name="symbol" id="sym6" value="symbol--6" />
-        </label>
+        <input type="radio" name="symbol" id="symbol-1" value="symbol--1" />
+        <label for="symbol-1" class="symbol symbol--1"></label>
+
+        <input type="radio" name="symbol" id="symbol-2" value="symbol--2" />
+        <label for="symbol-2" class="symbol symbol--2"></label>
+
+        <input type="radio" name="symbol" id="symbol-3" value="symbol--3" />
+        <label for="symbol-3" class="symbol symbol--3"></label>
+
+        <input type="radio" name="symbol" id="symbol-4" value="symbol--4" />
+        <label for="symbol-4" class="symbol symbol--4"></label>
       </form>
 
     </div>

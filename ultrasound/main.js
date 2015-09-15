@@ -27,8 +27,7 @@ toggle.addEventListener('change', function(e, value){
   }
 })
 
-// var EMOTICONS = ['happy', 'sad', 'heart', 'mad', 'star', 'oh'];
-var EMOTICONS = ['symbol--1', 'symbol--2', 'symbol--3', 'symbol--4', 'symbol--5', 'symbol--6'];
+var EMOTICONS = ['symbol--1', 'symbol--2', 'symbol--3', 'symbol--4'];
 // Calculate the alphabet based on the emoticons.
 var ALPHABET = generateAlphabet(EMOTICONS);
 var PLACEHOLDER = 'symbol--pending';
@@ -53,7 +52,7 @@ function createSonicNetwork(opt_coder) {
 
   sonicServer.start();
   sonicServer.on('message', onIncomingEmoticon);
-  sonicServer.setDebug(true);
+  // sonicServer.setDebug(true);
 }
 
 function generateAlphabet(list) {
