@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sonic Chat Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+
+    html{
+      font: 18px/1.5 normal normal "Helvetica Neue", Arial, sans-serif;
+    }
+
+    form{
+      border: 3px solid lightgray;
+      display: flex;
+      margin: 1em 0;
+    }
+
+    form input{
+      padding: 1rem;
+      font-size: 1.5em;
+      flex: 1 1 0;
+      border: none;
+    }
+
+    form button{
+      min-width: 100px;
+      border: none;
+      font-size: 1.5em;
+    }
+
+    .sonic-chat-output{
+      background: lightgray;
+      font-size: 1.5em;
+      padding: 1rem;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>Sonic Chat</h1>
+
+  <form action="#" data-message-form>
+    <input type="text" name="msg" autocomplete="off" placeholder="message" />
+    <button>Send</button>
+  </form>
+
+  <em>Incoming message:</em>
+  <div class="sonic-chat-output" data-sonic-chat-output></div>
+
+  <script src="build/bundle-chat.js"></script>
+
+</body>
+</html>
