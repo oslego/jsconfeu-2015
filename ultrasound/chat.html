@@ -6,8 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
 
+    * {
+      box-sizing: border-box;
+    }
+
     html{
       font: 18px/1.5 normal normal "Helvetica Neue", Arial, sans-serif;
+      padding: 1rem;
+    }
+
+    h1{
+      font-size: 2em;
+      text-align: center;
+    }
+
+    small{
+      opacity: 0.3;
+      display: block;
+      text-align: center;
+    }
+
+    section{
+      max-width: 50em;
+      margin: 0 auto;
     }
 
     form{
@@ -39,17 +60,48 @@
 </head>
 <body>
 
-  <h1>Sonic Chat</h1>
+  <section>
+    <h1>Sonic Chat</h1>
 
-  <form action="#" data-message-form>
-    <input type="text" name="msg" autocomplete="off" placeholder="message" />
-    <button>Send</button>
-  </form>
+    <form action="#" data-message-form>
+      <input type="text" name="msg" autocomplete="off" placeholder="message" />
+      <button>Send</button>
+    </form>
 
-  <em>Incoming message:</em>
-  <div class="sonic-chat-output" data-sonic-chat-output></div>
+    <p>Incoming message:</p>
+    <div class="sonic-chat-output" data-sonic-chat-output></div>
+    <small>Uses <a href="https://github.com/borismus/sonicnet.js" target="_blank">sonicnet.js</a> by Boris Smus</small>
+  </section>
 
-  <script src="build/bundle-chat.js"></script>
+  <script src="lib/sonicnet.js"></script>
+  <script>
+    var opt_coder = new SonicCoder({
+      freqMin: 440,
+      freqMax: 1760
+    });
 
+    var sonicServer = new SonicServer({coder: opt_coder});
+    var sonicSocket = new SonicSocket({coder: opt_coder, charDuration: 0.2});
+
+    var form = document.querySelector('[data-message-form]');
+    var output = document.querySelector('[data-sonic-chat-output]');
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      sonicSocket.send(e.target.elements.msg.value);
+      output.textContent = '';
+    })
+
+    sonicServer.start();
+    sonicServer.on('message', function(message) {
+      console.log(message);
+      output.textContent = message;
+    });
+
+    sonicServer.on('character', function(character) {
+      console.warn(character);
+      output.textContent += character;
+    });
+  </script>
 </body>
 </html>
