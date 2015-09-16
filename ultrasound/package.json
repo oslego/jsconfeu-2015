@@ -4,16 +4,12 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "browserify": "browserify main.js -o build/bundle.js",
-    "browserify:chat": "browserify main-chat.js -o build/bundle-chat.js",
-    "server": "http-server . -p9292 -o --slilent",
-    "start": "watch 'npm run browserify && npm run browserify:chat' . & npm run server"
+    "server": "http-server . -p9292 -o --silent",
+    "start": "npm run server"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "browserify": "^11.0.1",
-    "http-server": "^0.8.0",
-    "watch": "^0.16.0"
+    "http-server": "^0.8.0"
   }
 }

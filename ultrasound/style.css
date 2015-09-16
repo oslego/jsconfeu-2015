@@ -88,26 +88,33 @@
 /* Toggle */
 
 .toggle{
-  border: 1px solid black;
   display: inline-flex;
 }
 
-.toggle__option{
-  flex: 1 1 100px;
-  cursor: pointer;
-}
+  .toggle__option{
+    flex: 1 1 100px;
+    cursor: pointer;
+  }
 
-.toggle__option span{
-  display: block;
-  padding: 1em 2em;
-}
+    .toggle__option input{
+      position: absolute;
+      left: -999em;
+    }
 
-.toggle__option input{
-  position: absolute;
-  left: -999em;
-}
+    .toggle__option input:checked + span{
+      background: black;
+      color: #fff;
+    }
 
-.toggle__option input:checked + span{
-  background: black;
-  color: #fff;
-}
+    .toggle__option:first-child span{
+      border-radius: 20px 0 0 20px;
+    }
+    .toggle__option:last-child span{
+      border-radius: 0 20px 20px 0;
+    }
+
+    .toggle__option span{
+      border: 1px solid black;
+      display: block;
+      padding: 1em 2em;
+    }

@@ -177,6 +177,10 @@ SonicServer.prototype.on = function(event, callback) {
   if (event == 'message') {
     this.callbacks.message = callback;
   }
+
+  if (event == 'character') {
+    this.callbacks.character = callback;
+  }
 };
 
 SonicServer.prototype.setDebug = function(value) {
@@ -307,6 +311,7 @@ SonicServer.prototype.analysePeaks = function() {
         char != this.coder.startChar && char != this.coder.endChar) {
       this.buffer += char;
       this.lastChar = char;
+      this.fire_(this.callbacks.character, char);
     }
     // Also look for the end character to go into idle mode.
     if (char == this.coder.endChar) {
@@ -349,15 +354,16 @@ SonicServer.prototype.debugDraw_ = function() {
   canvas.width = document.body.offsetWidth;
   canvas.height = 480;
   drawContext = canvas.getContext('2d');
+
   // Plot the frequency data.
-  for (var i = 0; i < this.freqs.length; i++) {
+  for (var i = 0; i < this.freqs.length; i += 5) {
     var value = this.freqs[i];
     // Transform this value (in db?) into something that can be plotted.
-    var height = value + 400;
-    var offset = canvas.height - height - 1;
+    var height = value + 300;
+    var offset = canvas.height - height;
     var barWidth = canvas.width/this.freqs.length;
     drawContext.fillStyle = 'black';
-    drawContext.fillRect(i * barWidth, offset, 1, 1);
+    drawContext.fillRect(i * barWidth, offset, 6, height);
   }
 };
 
@@ -471,28 +477,35 @@ var SonicSocket = require('./lib/sonic-socket.js');
 var SonicServer = require('./lib/sonic-server.js');
 var SonicCoder = require('./lib/sonic-coder.js');
 
-var preview = document.querySelector('[data-symbol-preview]')
+
 var form = document.querySelector('[data-symbol-container]')
 
 form.addEventListener('change', function(e, value){
   value = form.elements.symbol.value;
-  preview.className = value;
 
-  var index = EMOTICONS.indexOf(name);
+  var index = EMOTICONS.indexOf(value);
   sonicSocket.send(index.toString());
 })
 
 var toggle = document.querySelector('[data-frequency-toggle]')
 toggle.addEventListener('change', function(e, value){
   value = toggle.elements.freq.value;
-  console.log(value)
+
+  if (value === 'audible'){
+    var coder = new SonicCoder({
+      freqMin: 440,
+      freqMax: 1760
+    });
+    createSonicNetwork(coder);
+  } else {
+    createSonicNetwork();
+  }
 })
 
-// var EMOTICONS = ['happy', 'sad', 'heart', 'mad', 'star', 'oh'];
-var EMOTICONS = ['sym1', 'sym2', 'sym3', 'sym4', 'sym5', 'sym6'];
+var EMOTICONS = ['symbol--1', 'symbol--2', 'symbol--3', 'symbol--4'];
 // Calculate the alphabet based on the emoticons.
 var ALPHABET = generateAlphabet(EMOTICONS);
-var PLACEHOLDER = 'img/placeholder.gif';
+var PLACEHOLDER = 'symbol--pending';
 
 var sonicSocket;
 var sonicServer;
@@ -514,39 +527,8 @@ function createSonicNetwork(opt_coder) {
 
   sonicServer.start();
   sonicServer.on('message', onIncomingEmoticon);
+  // sonicServer.setDebug(true);
 }
-
-
-var isAudibleEl = document.querySelector('#is-audible');
-isAudibleEl.addEventListener('click', function(e) {
-  if (e.target.checked) {
-    var coder = new SonicCoder({
-      freqMin: 440,
-      freqMax: 1760
-    });
-    createSonicNetwork(coder);
-  } else {
-    createSonicNetwork();
-  }
-});
-
-var isFullScreenEl = document.querySelector('#is-full-screen');
-isFullScreenEl.addEventListener('click', function(e) {
-  var selectEl = document.querySelector('#select-emoticon');
-  var recvEl = document.querySelector('#received-emoticon');
-  if (e.target.checked) {
-    selectEl.style.display = 'none';
-    recvEl.classList.add('big');
-  } else {
-    selectEl.style.display = 'block';
-    recvEl.classList.remove('big');
-  }
-});
-
-var isVisualizer = document.querySelector('#is-visualizer');
-isVisualizer.addEventListener('click', function(e) {
-  sonicServer.setDebug(e.target.checked);
-});
 
 function generateAlphabet(list) {
   var alphabet = '';
@@ -559,16 +541,14 @@ function generateAlphabet(list) {
 function onIncomingEmoticon(message) {
   console.log('message: ' + message);
   var index = parseInt(message);
-  // Make the emoticon pop into view.
-  var emoticonEl = document.querySelector('#received-emoticon');
   // Validate the message -- it has to be a single valid index.
   var isValid = (!isNaN(index) && 0 <= index && index < EMOTICONS.length);
+  var preview = document.querySelector('[data-symbol-preview]');
+
   if (isValid) {
-    emoticonEl.src = getIcon(EMOTICONS[index]);
-    emoticonEl.classList.remove('placeholder');
+    preview.className = EMOTICONS[index];
   } else {
-    emoticonEl.classList.add('placeholder');
-    emoticonEl.src = PLACEHOLDER;
+    preview.className = PLACEHOLDER;
   }
 }
 

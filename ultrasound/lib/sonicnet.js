@@ -1,13 +1,7 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var SonicSocket = require('./sonic-socket.js');
-var SonicServer = require('./sonic-server.js');
-var SonicCoder = require('./sonic-coder.js');
-
-module.exports = {
-  SonicSocket: SonicSocket,
-  SonicServer: SonicServer,
-  SonicCoder: SonicCoder
-}
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+window.SonicSocket = require('./sonic-socket.js');
+window.SonicServer = require('./sonic-server.js');
+window.SonicCoder = require('./sonic-coder.js');
 
 },{"./sonic-coder.js":3,"./sonic-server.js":4,"./sonic-socket.js":5}],2:[function(require,module,exports){
 function RingBuffer(maxLength) {
@@ -188,6 +182,9 @@ SonicServer.prototype.on = function(event, callback) {
   if (event == 'message') {
     this.callbacks.message = callback;
   }
+  if (event == 'character') {
+    this.callbacks.character = callback;
+  }
 };
 
 SonicServer.prototype.setDebug = function(value) {
@@ -201,7 +198,9 @@ SonicServer.prototype.setDebug = function(value) {
 };
 
 SonicServer.prototype.fire_ = function(callback, arg) {
-  callback(arg);
+  if (typeof(callback) === 'function') {
+    callback(arg);
+  }
 };
 
 SonicServer.prototype.onStream_ = function(stream) {
@@ -318,6 +317,7 @@ SonicServer.prototype.analysePeaks = function() {
         char != this.coder.startChar && char != this.coder.endChar) {
       this.buffer += char;
       this.lastChar = char;
+      this.fire_(this.callbacks.character, char);
     }
     // Also look for the end character to go into idle mode.
     if (char == this.coder.endChar) {
@@ -477,4 +477,4 @@ SonicSocket.prototype.scheduleToneAt = function(freq, startTime, duration) {
 
 module.exports = SonicSocket;
 
-},{"./sonic-coder.js":3}]},{},[1])
+},{"./sonic-coder.js":3}]},{},[1]);
