@@ -185,6 +185,9 @@ SonicServer.prototype.on = function(event, callback) {
   if (event == 'character') {
     this.callbacks.character = callback;
   }
+  if (event == 'sample') {
+    this.callbacks.sample = callback;
+  }
 };
 
 SonicServer.prototype.setDebug = function(value) {
@@ -280,6 +283,9 @@ SonicServer.prototype.loop = function() {
   if (this.debug) {
     this.debugDraw_();
   }
+
+  this.fire_(this.callbacks.sample, this.freqs);
+
   if (this.isRunning) {
     this.raf_(this.loop.bind(this));
   }

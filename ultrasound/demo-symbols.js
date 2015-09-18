@@ -7,31 +7,16 @@
 
   var sonicSocket;
   var sonicServer;
+  var signalViewer;
 
-  var form = document.querySelector('[data-symbol-container]')
+  document.querySelector('[data-toggle-frequency]')
+    .addEventListener('change', onToggleFrequency);
 
-  form.addEventListener('change', function(e, value){
-    value = form.elements.symbol.value;
+  document.querySelector('[data-toggle-visualizer]')
+    .addEventListener('change', onToggleVisualizer);
 
-    var index = EMOTICONS.indexOf(value);
-    sonicSocket.send(index.toString());
-  })
-
-  var toggle = document.querySelector('[data-frequency-toggle]')
-  toggle.addEventListener('change', function(e, value){
-    value = toggle.elements.freq.value;
-
-    if (value === 'audible'){
-      var coder = new SonicCoder({
-        freqMin: 440,
-        freqMax: 1760
-      });
-      createSonicNetwork(coder);
-    } else {
-      createSonicNetwork();
-    }
-  })
-
+  document.querySelector('[data-symbol-picker]')
+    .addEventListener('change', onPickSymbol);
 
   createSonicNetwork();
 
@@ -48,17 +33,9 @@
       sonicSocket = new SonicSocket({alphabet: ALPHABET});
     }
 
-    sonicServer.start();
     sonicServer.on('message', onIncomingEmoticon);
-    // sonicServer.setDebug(true);
-  }
-
-  function generateAlphabet(list) {
-    var alphabet = '';
-    for (var i = 0; i < Math.min(list.length, 9); i++) {
-      alphabet += i.toString();
-    }
-    return alphabet;
+    sonicServer.on('sample', onSampleIteration)
+    sonicServer.start();
   }
 
   function onIncomingEmoticon(message) {
@@ -75,4 +52,55 @@
     }
   }
 
+  function onSampleIteration(freqs){
+    var min = Math.min.apply(null, freqs)
+    var max = Math.max.apply(null, freqs)
+    // console.log(min, max);
+
+    if (!signalViewer){
+      return;
+    }
+
+    signalViewer.render(freqs);
+  }
+
+  function onPickSymbol(e){
+    var value = e.target.form.elements.symbol.value;
+    var index = EMOTICONS.indexOf(value);
+    sonicSocket.send(index.toString());
+  }
+
+  function onToggleFrequency(e){
+    var value = e.target.form.elements.freq.value;
+
+    if (value === 'audible'){
+      var coder = new SonicCoder({
+        freqMin: 440,
+        freqMax: 1760
+      });
+      createSonicNetwork(coder);
+    } else {
+      createSonicNetwork();
+    }
+  }
+
+  function onToggleVisualizer(e){
+    var value = e.target.form.elements.visualizer.checked;
+
+    if (value){
+      signalViewer = new SignalViewer({ min: -140, max: 0 });
+      signalViewer.create();
+    } else {
+      signalViewer.destroy();
+      signalViewer = undefined;
+    }
+  }
+
+  function generateAlphabet(list) {
+    var alphabet = '';
+    for (var i = 0; i < Math.min(list.length, 9); i++) {
+      alphabet += i.toString();
+    }
+    return alphabet;
+  }
 })()

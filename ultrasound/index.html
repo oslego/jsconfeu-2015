@@ -10,25 +10,29 @@
 
   <div id="sonic-demo">
 
-    <form action="#" class="toggle toggle--frequency" data-frequency-toggle>
-
+    <form action="#" class="toggle toggle--freq" data-toggle-frequency>
       <label for="freq-ultrasound" class="toggle__option">
         <input type="radio" id="freq-ultrasound" name="freq" value="ultrasound" checked />
         <span>Ultrasound</span>
       </label>
-
       <label for="freq-audible" class="toggle__option">
         <input type="radio" id="freq-audible" name="freq" value="audible" />
         <span>Audible</span>
       </label>
+    </form>
 
+    <form action="#" class="toggle toggle--visualizer" data-toggle-visualizer>
+      <label for="visualizer" class="toggle__option">
+        <input type="checkbox" name="visualizer" id="visualizer" />
+        <span>Visualize</span>
+      </label>
     </form>
 
     <div class="sonic-demo-wrapper">
 
       <div id="symbol-preview" class="symbol--pending" data-symbol-preview></div>
 
-      <form action="#" class="symbol-container" data-symbol-container>
+      <form action="#" class="symbol-container" data-symbol-picker>
         <input type="radio" name="symbol" id="symbol-1" value="symbol--1" />
         <label for="symbol-1" class="symbol symbol--1"></label>
 
@@ -46,6 +50,7 @@
   </div>
 
   <script src="lib/sonicnet.js"></script>
+  <script src="lib/SignalViewer.js"></script>
   <script src="demo-symbols.js"></script>
 </body>
 </html>

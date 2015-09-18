@@ -89,6 +89,8 @@
 
 .toggle{
   display: inline-flex;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
   .toggle__option{
@@ -109,8 +111,13 @@
     .toggle__option:first-child span{
       border-radius: 20px 0 0 20px;
     }
+
     .toggle__option:last-child span{
       border-radius: 0 20px 20px 0;
+    }
+
+    .toggle__option:only-child span{
+      border-radius: 20px;
     }
 
     .toggle__option span{
