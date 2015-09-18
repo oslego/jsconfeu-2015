@@ -1,0 +1,58 @@
+/**
+ * "Disconnected Networking" talk theme for reveal.js.
+ *
+ * Based on "black" theme by Hakim El Hattab, http://hakim.se
+ */
+
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+
+// Include theme-specific fonts
+@import url(../../lib/font/source-sans-pro/source-sans-pro.css);
+@import url(../../lib/font/lato/lato.css);
+
+
+/*
+font-family: 'Playfair Display', serif;
+
+font-family: 'Lato', sans-serif;
+ */
+
+
+// Override theme settings (see ../template/settings.scss)
+$backgroundColor: #222;
+
+$mainColor: #fff;
+$headingColor: #fff;
+
+$mainFontSize: 38px;
+$mainFont: 'Lato', Helvetica, sans-serif;
+$headingFont: 'Lato', Helvetica, sans-serif;
+$artisticFont: 'Playfair Display', Times, serif;
+$headingTextShadow: none;
+$headingLetterSpacing: normal;
+$headingTextTransform: uppercase;
+$headingFontWeight: 900;
+$linkColor: #42affa;
+$linkColorHover: lighten( $linkColor, 15% );
+$selectionBackgroundColor: lighten( $linkColor, 25% );
+
+$heading1Size: 2.5em;
+$heading2Size: 1.6em;
+$heading3Size: 1.3em;
+$heading4Size: 1.0em;
+
+section.has-light-background {
+	&, h1, h2, h3, h4, h5, h6 {
+		color: #222;
+	}
+}
+
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------
