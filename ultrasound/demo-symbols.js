@@ -86,9 +86,10 @@
 
   function onToggleVisualizer(e){
     var value = e.target.form.elements.visualizer.checked;
+    var options = { min: -140, max: 0, showLatestValue: false }
 
     if (value){
-      signalViewer = new SignalViewer({ min: -140, max: 0 });
+      signalViewer = new SignalViewer(options);
       signalViewer.create();
     } else {
       signalViewer.destroy();

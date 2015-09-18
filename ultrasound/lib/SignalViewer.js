@@ -8,8 +8,7 @@ function SignalViewer(params){
     max: 1,
     width: document.body.offsetWidth,
     height: 480,
-    showLatestValue: true,
-    contiguous: true
+    showLatestValue: true
   }
 
   params = params || {};
@@ -74,28 +73,20 @@ SignalViewer.prototype.render = function(buffer){
 
     var value = scaleValue.call(this, buffer[i]);
 
-    // var nValue = (value - this.config.min) / (this.config.max - this.config.min);
-    // var pValue = (nValue * 240) + this.canvas.height / 2;
-
-    // var height = -1 * pValue;
-    // var width  = 5;
-    // var xOffset = canvas.width / 2 - i*5;
-    // var yOffset = 480 * 1.25;
-    // context.fillStyle = 'black';
-    // context.fillRect(xOffset, yOffset, width, height);
-
     context.lineWidth = 2;
     context.strokeStyle = '#ff0000';
     context.lineCap = 'round';
     context.lineJoin = 'round';
-    context.lineTo(i * step, 480 - value);
+    context.lineTo(i * step, this.canvas.height - value);
   }
 
   context.stroke();
 
-  var displayValue = buffer[buffer.length-1];
+  if (this.config.showLatestValue){
+    var displayValue = buffer[buffer.length-1];
 
-  context.font = 'bold 90px Helvetica';
-  context.textAlign = 'right';
-  context.fillText(displayValue, this.canvas.width - 15, 90);
+    context.font = 'bold 90px Helvetica';
+    context.textAlign = 'right';
+    context.fillText(displayValue, this.canvas.width - 15, 90);
+  }
 }
