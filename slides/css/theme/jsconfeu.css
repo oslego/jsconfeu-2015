@@ -1,5 +1,6 @@
 @import url(../../lib/font/source-sans-pro/source-sans-pro.css);
 @import url(../../lib/font/lato/lato.css);
+@import url(../../lib/font/playfair-display/playfair-display.css);
 /**
  * "Disconnected Networking" talk theme for reveal.js.
  *
@@ -40,7 +41,7 @@ body {
   font-weight: 900;
   line-height: 1.2;
   letter-spacing: normal;
-  text-transform: uppercase;
+  text-transform: none;
   text-shadow: none;
   word-wrap: break-word; }
 
@@ -266,3 +267,10 @@ body {
  *********************************************/
 .reveal .slide-number {
   color: #42affa; }
+
+body {
+  /*
+  background: url(resources/polygon.gif), linear-gradient(#5D457C 0%, #5D457C 70% );
+	background-blend-mode: hard-light;
+ */
+  background: #5D457C; }
