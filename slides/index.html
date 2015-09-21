@@ -97,9 +97,9 @@
 					<p>swap visualizer parts: moving ear, stationary sound emitter</p>
 				</section>
 
-				<section>
-					<h2>Doppler Effect with WebAudio</h2>
-					<p>visualization with laptop speaker + moving hand + laptop microphone (echo)</p>
+				<section data-state="doppler-demo">
+					<h2>Fequency Shift</h2>
+					<div class="visualizer visualizer--doppler" data-doppler-visualizer></div>
 				</section>
 
 				<section>
@@ -265,6 +265,13 @@
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.js"></script>
 
+		<!-- Demo utils -->
+		<script src="lib/js/doppler.js"></script>
+		<script src="lib/js/SignalViewer.js"></script>
+
+		<!-- Demo drivers -->
+		<script src="js/main.js"></script>
+
 		<script>
 
 			// Full list of configuration options available at:
@@ -275,7 +282,7 @@
 				history: true,
 				center: true,
 
-				transition: 'slide', // none/fade/slide/convex/concave/zoom
+				transition: 'fade', // none/fade/slide/convex/concave/zoom
 
 				// Optional reveal.js plugins
 				dependencies: [
