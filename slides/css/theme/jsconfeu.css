@@ -281,3 +281,29 @@ body {
   /* background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(255,255,255, 1) 10%); */ }
   .visualizer canvas {
     -webkit-mask: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #ffffff 7%); }
+  .visualizer--doppler {
+    transition: transform 1s cubic-bezier(0, 0, 0.2, 1);
+    transform-origin: top right;
+    position: absolute;
+    top: 0; }
+    .visualizer--doppler:before {
+      content: "Frequency Shift";
+      font-family: 'Lato', Helvetica, sans-serif;
+      font-weight: 900;
+      font-size: 1.6em;
+      transition: opacity 0.25s cubic-bezier(0, 0, 0.2, 1); }
+    .visualizer--doppler canvas {
+      -webkit-mask: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #ffffff 7%); }
+
+.demo--doppler .current-fragment ~ .visualizer {
+  transform: scale(0.75) translatey(-150px); }
+  .demo--doppler .current-fragment ~ .visualizer:before {
+    opacity: 0; }
+  .demo--doppler .current-fragment ~ .visualizer canvas {
+    -webkit-mask: linear-gradient(90deg, rgba(0, 0, 0, 0) 50%, #ffffff 57%); }
+.demo--doppler .fixture {
+  position: absolute;
+  outline: 1px solid red;
+  width: 55%;
+  height: 600px; }
+
