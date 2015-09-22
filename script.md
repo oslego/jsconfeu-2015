@@ -1,17 +1,19 @@
 - Intro
-  - Work at Adobe on CSS features.
-  - Talk about practical things: CSS Shapes, CSS Masking, CSS Blend Modes.
-  - Build tools and prototypes to make life easier for web designers.
-  - That doesn't matter for this talk.
-  - This talk is less practical, but it's about something that fascinates me: **unconventional uses of web technology**.
-  - networking between disconnected devices
-  - unconventional input modes
-  - sound, light, magnetism, touch
+  - I work at Adobe on CSS features:
+    - Speaking about practical things: CSS Shapes, CSS Masking, CSS Blend Modes.
+    - Building tools and prototypes to make life easier for web designers.
+    - Practical things!
+    - That doesn't matter for this talk.
+
+  - "This talk is less practical; it's about something that fascinates me: **unconventional uses of technology** to transmit data and input."
+    - networking between disconnected devices
+    - unconventional input modes
+    - sound, light, electro-magnetism
 
 
 - Going Offline
   - icons: no wifi, no BT, no connection
-  - "This is something all conference speakers dread on stage -- not having a reliable connection. But for the purpose of this talk (disconnected networking) and to be truly honest that all demos work as advertised, I'm going to turn off all connectivity."
+  - "This is something all conference speakers dread on stage -- not having a reliable connection. But for the purpose of this talk (disconnected networking) to prove that all demos work as advertised, I'm going to turn off all connectivity."
 
 
 - #badBIOS
@@ -32,11 +34,44 @@
     - proved by other security researchers
 
 
-- Ultrasond Networking,
+- Ultrasound Networking [DEMO],
   - Boris Smus, Google
+    - http://smus.com/ultrasonic-networking/
+    - https://github.com/borismus/sonicnet.js
+    - sonicnet.js:
+      - library to encode alphabet into spectrum of inaudible sound (ultrasound)
+      - broadcast ultrasound then picked-up by another device
+      - 2-way communication with ultrasound
+      - option for audible spectrum; better range, but gets interference from ambient sound (speech, music)
+  - Google Tone extension:
+    - https://chrome.google.com/webstore/detail/google-tone/nnckehldicaciogcbchegobnafnjkcne?hl=en
+    - share links between computers using sound
 
 
-- Ambient light + Morse Code
+- Motion sensing with sound [DEMO]:
+  - (Doppler Effect)
+    https://en.wikipedia.org/wiki/Doppler_effect
+    Definition: frequency shift of a wave (sound/light) as experienced by an external observer when the emitter of the wave is moving fast towards or away from the observer.
+
+    Think of an ambulance siren: high pitch when approaching, low pitch when going away;
+
+    Fundamental principle for radar:
+      - ground station emits radio wave, wave hits moving airplane and bounces back; station measures freq shift to determine how fast the airplane is moving (i.e: is it coming or going?).
+      - multiple ground stations enables triangulation (i.e: where is the airplane?)
+
+  - doppler.js library
+    - https://github.com/danielrapp/doppler
+    - uses WebAudio API to send ultrasound and listens to incoming sound (echo) to determine freq shift between the two.
+    - determine hand position relative to laptop (coming or going)
+    - DEMOS using motion sensing: visualizer, scale object, scroll page, navigate slide deck
+
+- Ambient light + Morse Code [DEMO]
+  - DeviceLight API
+    Detects changes in ambient room light.
+    Typical use case: change styles to make reading easier on the eyes
+    [DEMO] Unconventional use case: send rhythmic light pulses, decode as optical Morse Code.
+    https://github.com/oslego/opticalmorse
+
   - (Support)
     Ambient light events in browsers currently work only on Firefox and in Chrome (behind a flag).
     The practicality of this technique is quite limited.
@@ -72,3 +107,15 @@
     - radio spectrum is crowded / light has more spectrum than radio.
     - radio prone to interference / light is isolated in rooms.
     - Haas demoed stream of video over LiFi
+
+- Others:
+  - Misfit Shine (wearable)
+    http://misfit.com/
+    Initial KickStarter video: put wearable on phone touchscreen to sync
+    Speculation: sending data through simulated rhythmic touch?
+    Revelation: it's just Bluetooth LE, but very low range. Putting on screen is a gimmick, not real.
+
+  - Google Cardboard (VR headset)
+    http://smus.com/magnetic-input-mobile-vr/
+    Problem: device in a box, user can't access it to provide input.
+    Solution: magnet on the side of the cardboard box + magnetometer sensor on device reading changes in eletro-magnetic field => significant variations = input
