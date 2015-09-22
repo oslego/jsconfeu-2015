@@ -150,6 +150,8 @@
     },
 
     doNavigation: function(){
+      document.documentElement.classList.toggle('doppler-navigation');
+
       if (this.navigation){
         console.log('toggle off!')
         this.callback = undefined;
