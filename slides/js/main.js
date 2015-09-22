@@ -166,6 +166,12 @@
         this.onNegative = undefined;
         this.navigation = false;
 
+        // re-enable fragments
+        Reveal.configure({
+          fragments: true
+        })
+
+
         // TODO: figure out if this needs to be here?
         // doppler.stop()
         return;
@@ -179,6 +185,12 @@
       this.onSample = undefined;
       this.onPositive = Reveal.next;
       this.onNegative = Reveal.prev;
+
+      // temporarily disable fragments to get better transitions between slides
+      Reveal.configure({
+        fragments: false
+      })
+
     }
   }
 
