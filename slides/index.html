@@ -102,6 +102,12 @@
 				</section>
 
 				<section class="demo--doppler" data-state="doppler-demo">
+					<div class="fragment current-visible fixture current-fragment" data-fixture="doppler-scale">
+						<svg class="illustration" is-doppler-scale-target>
+							<use xlink:href="#balloon-icon"></use>
+						<svg>
+					</div>
+
 					<div class="fragment current-visible fixture" data-fixture="doppler-scroll">
 						<div class="paper" is-doppler-scroll-target>
 							<p class="paper__title">Document Title</p>
@@ -141,11 +147,10 @@
 						</div>
 
 					</div>
-					<div class="fragment current-visible fixture" data-fixture="doppler-scale">
-						<h1 class"paper" is-doppler-scale-target></h1>
-					</div>
 
 					<div class="visualizer visualizer--doppler" is-doppler-visualizer></div>
+					<!-- <div class="credit">Balloon by <a href="https://thenounproject.com/mockturtle">Sergey Demushkin</a> from the Noun Project</div> -->
+
 				</section>
 
 				<section>
@@ -296,6 +301,12 @@
 			</div>
 		</div>
 
+		<svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+			<symbol id="balloon-icon" viewBox="0 0 100 100">
+				<path d="M67.846,34.666c0-9.84-8.006-17.845-17.846-17.845s-17.845,8.005-17.845,17.845c0,8.943,6.831,22.004,16.456,23.171  l-1.365,1.916c-0.163,0.229-0.185,0.529-0.056,0.779c0.128,0.249,0.386,0.405,0.667,0.405h1.162c-1.583,2.67-2.533,6.177,0.2,11.658  c2.748,5.516-1.497,9.104-1.677,9.252c-0.321,0.262-0.37,0.733-0.108,1.055c0.148,0.183,0.364,0.277,0.582,0.277  c0.167,0,0.334-0.056,0.473-0.17c0.054-0.044,5.363-4.477,2.072-11.083c-2.676-5.37-1.475-8.456,0.23-10.989h1.352  c0.006,0,0.015,0,0.02,0c0.415,0,0.75-0.336,0.75-0.75c0-0.219-0.094-0.414-0.242-0.553l-1.281-1.799  C61.014,56.669,67.846,43.609,67.846,34.666z M44.923,22.58c-3.959,1.778-6.917,5.355-7.914,9.568  c-0.081,0.345-0.389,0.577-0.729,0.577c-0.057,0-0.115-0.006-0.173-0.02c-0.403-0.096-0.652-0.5-0.557-0.903  c1.104-4.663,4.378-8.622,8.76-10.59c0.378-0.17,0.821-0.001,0.99,0.377C45.47,21.966,45.301,22.411,44.923,22.58z"/>
+			</symbol>
+		</svg>
+
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.js"></script>
 
@@ -331,6 +342,7 @@
 
 		<!-- Demo drivers -->
 		<script src="js/main.js"></script>
+
 
 	</body>
 </html>

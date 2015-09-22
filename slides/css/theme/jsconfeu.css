@@ -307,6 +307,10 @@ body {
   position: absolute;
   width: 55%;
   height: 600px; }
+.demo--doppler .illustration {
+  height: 100%;
+  fill: white;
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1); }
 
 .reveal div.paper {
   box-sizing: border-box;
@@ -358,3 +362,12 @@ html::before {
 
 html.doppler-navigation::before {
   transform: translatey(0); }
+
+.reveal div.credit {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  height: 1em;
+  background: black;
+  font-size: 0.5em; }

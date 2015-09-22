@@ -108,11 +108,19 @@
         return;
       }
       console.log('Doppler Scale Demo Active')
-      this.onSample = function(diff){
-        if (diff > 15 || diff < 15){
-          this.scaleTarget.style.transform = 'scale('+ Math.abs(diff / 10) + ')'
-        }
-      }
+
+      var scale = 1;
+
+      this.onPositive = function(diff){
+        scale += diff / 10;
+        this.scaleTarget.style.transform = 'scale('+ scale +')'
+      };
+
+      this.onNegative = function(diff){
+        scale += diff / 10;
+        scale = Math.max(scale, 0);
+        this.scaleTarget.style.transform = 'scale('+ scale +')'
+      };
     },
 
     doScroll: function(){
