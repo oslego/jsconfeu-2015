@@ -8,8 +8,6 @@
 </head>
 <body>
 
-  <div id="sonic-demo">
-
     <form action="#" class="toggle toggle--freq" data-toggle-frequency>
       <label for="freq-ultrasound" class="toggle__option">
         <input type="radio" id="freq-ultrasound" name="freq" value="ultrasound" checked />
@@ -24,7 +22,7 @@
     <form action="#" class="toggle toggle--visualizer" data-toggle-visualizer>
       <label for="visualizer" class="toggle__option">
         <input type="checkbox" name="visualizer" id="visualizer" />
-        <span>Visualize</span>
+        <span>Visualizer</span>
       </label>
     </form>
 
@@ -47,7 +45,10 @@
       </form>
 
     </div>
-  </div>
+
+    <!-- placeholder for visualizer -->
+    <div class="visualizer" is-sonic-visualizer></div>
+
 
   <script src="lib/sonicnet.js"></script>
   <script src="lib/SignalViewer.js"></script>

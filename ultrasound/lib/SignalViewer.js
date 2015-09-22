@@ -8,7 +8,13 @@ function SignalViewer(params){
     max: 1,
     width: document.body.offsetWidth,
     height: 480,
-    showLatestValue: true
+    showLatestValue: true,
+    
+    // style
+    lineColor: '#f00',
+    lineWidth: 1,
+    font: 'bold 90px Helvetica',
+    fontColor: '#000'
   }
 
   params = params || {};
@@ -35,9 +41,7 @@ SignalViewer.prototype.create = function(host){
   }
 
   this.canvas = document.createElement('canvas');
-  this.canvas.width = this.config.width;
-  this.canvas.height = this.config.height;
-  this.canvas.style.outline = "1px solid red";
+  this.setSize(host);
 
   host.appendChild(this.canvas);
 }
@@ -46,6 +50,17 @@ SignalViewer.prototype.destroy = function(){
   if (this.canvas){
     this.canvas.parentNode.removeChild(this.canvas)
   }
+}
+
+SignalViewer.prototype.setSize = function(el){
+  if (el instanceof HTMLElement){
+      var styles = window.getComputedStyle(el, null);
+      this.config.width = parseInt(styles['width']);
+      this.config.height = parseInt(styles['height'])
+  }
+
+  this.canvas.width = this.config.width;
+  this.canvas.height = this.config.height;
 }
 
 SignalViewer.prototype.render = function(buffer){
@@ -73,8 +88,8 @@ SignalViewer.prototype.render = function(buffer){
 
     var value = scaleValue.call(this, buffer[i]);
 
-    context.lineWidth = 2;
-    context.strokeStyle = '#ff0000';
+    context.lineWidth = this.config.lineWidth;
+    context.strokeStyle = this.config.lineColor;
     context.lineCap = 'round';
     context.lineJoin = 'round';
     context.lineTo(i * step, this.canvas.height - value);
@@ -85,7 +100,8 @@ SignalViewer.prototype.render = function(buffer){
   if (this.config.showLatestValue){
     var displayValue = buffer[buffer.length-1];
 
-    context.font = 'bold 90px Helvetica';
+    context.font = this.config.font;
+    context.fillStyle = this.config.fontColor;
     context.textAlign = 'right';
     context.fillText(displayValue, this.canvas.width - 15, 90);
   }

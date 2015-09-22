@@ -5,6 +5,13 @@
   var ALPHABET = generateAlphabet(EMOTICONS);
   var PLACEHOLDER = 'symbol--pending';
 
+  var VISUALIZER_STYLES = {
+    lineWidth: 5,
+    lineColor: '#fa0',
+    font: 'bold 90px Lato',
+    fontColor: '#fa0'
+  }
+
   var sonicSocket;
   var sonicServer;
   var signalViewer;
@@ -87,10 +94,11 @@
   function onToggleVisualizer(e){
     var value = e.target.form.elements.visualizer.checked;
     var options = { min: -140, max: 0, showLatestValue: false }
+    var host = document.querySelector('[is-sonic-visualizer]')
 
     if (value){
-      signalViewer = new SignalViewer(options);
-      signalViewer.create();
+      signalViewer = new SignalViewer(Object.assign(VISUALIZER_STYLES, options));
+      signalViewer.create(host);
     } else {
       signalViewer.destroy();
       signalViewer = undefined;
