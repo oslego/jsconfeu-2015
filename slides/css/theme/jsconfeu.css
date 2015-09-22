@@ -378,6 +378,12 @@ html.doppler-navigation::before {
 .reveal h2.topic {
   text-align: left; }
 
+.reveal section img {
+  margin: 0 0px;
+  background: none;
+  border: none;
+  box-shadow: none; }
+
 /* .reveal div.credit{
 	position: fixed;
 	bottom: 0;
