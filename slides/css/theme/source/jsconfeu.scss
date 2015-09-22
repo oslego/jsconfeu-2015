@@ -18,7 +18,7 @@
 /* @import url(../../lib/font/ahem/ahem.css); */
 
 // Override theme settings (see ../template/settings.scss)
-$backgroundColor: #222;
+$backgroundColor: #5D457C;
 
 $mainColor: #fff;
 $headingColor: #fff;
@@ -52,13 +52,11 @@ section.has-light-background {
 // ---------------------------------------------
 
 
-body{
-/*
-  background: url(resources/polygon.gif), linear-gradient(#5D457C 0%, #5D457C 70% );
+/* body{
+background: url(resources/polygon.gif), linear-gradient(#5D457C 0%, #5D457C 70% );
 	background-blend-mode: hard-light;
- */
  	background: #5D457C;
-}
+} */
 
 .visualizer{
 	width: 100%;
@@ -162,6 +160,7 @@ body{
 html::before{
 	display: block;
 	position: absolute;
+	z-index: 100;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -182,7 +181,36 @@ html.doppler-navigation::before{
 	transform: translatey(0);
 }
 
-.reveal div.credit{
+.reveal {
+	.agenda {
+		list-style: none;
+		font-family: $headingFont;
+		font-weight: 900;
+		font-size: $heading1Size;
+		margin: 0;
+
+		li{
+			margin-bottom: 0.1em;
+			color: lighten(#5D457C, 30%);
+		}
+
+		li.current{
+			color: #fa0;
+		}
+	}
+
+	h1.light{
+		font-weight: 300;
+	}
+
+	h2.topic{
+		text-align: left;
+	}
+
+
+}
+
+/* .reveal div.credit{
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -191,3 +219,4 @@ html.doppler-navigation::before{
 	background: black;
 	font-size: 0.5em;
 }
+ */
