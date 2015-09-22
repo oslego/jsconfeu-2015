@@ -1,11 +1,12 @@
-@import url(../../lib/font/source-sans-pro/source-sans-pro.css);
 @import url(../../lib/font/lato/lato.css);
-@import url(../../lib/font/playfair-display/playfair-display.css);
 /**
  * "Disconnected Networking" talk theme for reveal.js.
  *
  * Based on "black" theme by Hakim El Hattab, http://hakim.se
  */
+/* @import url(../../lib/font/source-sans-pro/source-sans-pro.css); */
+/* @import url(../../lib/font/playfair-display/playfair-display.css); */
+/* @import url(../../lib/font/ahem/ahem.css); */
 section.has-light-background, section.has-light-background h1, section.has-light-background h2, section.has-light-background h3, section.has-light-background h4, section.has-light-background h5, section.has-light-background h6 {
   color: #222; }
 
@@ -285,7 +286,8 @@ body {
     transition: transform 1s cubic-bezier(0, 0, 0.2, 1);
     transform-origin: top right;
     position: absolute;
-    top: 0; }
+    top: 0;
+    pointer-events: none; }
     .visualizer--doppler:before {
       content: "Frequency Shift";
       font-family: 'Lato', Helvetica, sans-serif;
@@ -296,14 +298,42 @@ body {
       -webkit-mask: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #ffffff 7%); }
 
 .demo--doppler .current-fragment ~ .visualizer {
-  transform: scale(0.75) translatey(-150px); }
+  transform: scale(0.75) translatey(-100px); }
   .demo--doppler .current-fragment ~ .visualizer:before {
     opacity: 0; }
   .demo--doppler .current-fragment ~ .visualizer canvas {
     -webkit-mask: linear-gradient(90deg, rgba(0, 0, 0, 0) 50%, #ffffff 57%); }
 .demo--doppler .fixture {
   position: absolute;
-  outline: 1px solid red;
   width: 55%;
   height: 600px; }
 
+.reveal div.paper {
+  box-sizing: border-box;
+  background: white;
+  height: 100%;
+  overflow-y: auto;
+  box-shadow: 8px 8px 10px 3px rgba(0, 0, 0, 0.48);
+  padding: 1em 1.3em 0.5em;
+  text-align: left; }
+  .reveal div.paper .paper__title {
+    color: #444;
+    font-size: 1em;
+    display: block;
+    margin: 0 0 0.75em 0;
+    font-weight: 700; }
+    .reveal div.paper .paper__title--h2 {
+      font-size: 0.75em;
+      margin-bottom: 0.75em; }
+  .reveal div.paper * {
+    font-size: 20px;
+    margin: 0 0 2em 0;
+    line-height: 1.6;
+    color: #aaa;
+    /* font-family: 'Ahem', sans-serif; */ }
+  .reveal div.paper ul {
+    list-style: inside;
+    width: 100%; }
+  .reveal div.paper li {
+    margin-bottom: 0.5em;
+    width: 100%; }

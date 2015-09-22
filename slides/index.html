@@ -102,12 +102,49 @@
 				</section>
 
 				<section class="demo--doppler" data-state="doppler-demo">
+					<div class="fragment current-visible fixture current-fragment" data-fixture="doppler-scroll">
+						<div class="paper" is-doppler-scroll-target>
+							<p class="paper__title">Document Title</p>
+
+							<p>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam nisi repellat minima at architecto dolore, ipsa unde, nulla fugiat aliquid perspiciatis.
+							</p>
+
+							<ul>
+								<li>Corporis perspiciatis</li>
+								<li>Aperiam nisi</li>
+								<li>Error distinctio</li>
+							</ul>
+
+							<p class="paper__title paper__title--h2">Heading 2</p>
+							<p>
+								Corporis perspiciatis, iure ab, nemo maxime placeat cumque, harum illum deserunt sapiente soluta aliquam facere nisi ullam nobis dolores? Error distinctio, quo! Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+							</p>
+
+							<p>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic voluptatum, delectus ratione ab consectetur eum adipisci.
+							</p>
+
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam sequi dolores fugiat, aliquam itaque. Ratione veritatis aliquam quasi voluptates fugit fuga! Sapiente earum ea quibusdam, consequatur velit alias adipisci aut. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis molestiae accusantium qui suscipit illo! Quam voluptas, veniam sapiente! Nulla eius, facere nihil provident, obcaecati et eligendi magnam cupiditate iste odit.</p>
+
+							<p class="paper__title paper__title--h2">Heading 2</p>
+							<ul>
+								<li>Quam voluptas</li>
+								<li>Error distinctio</li>
+								<li>Aperiam nisi</li>
+							</ul>
+
+							<p>
+								Corporis perspiciatis, iure ab, nemo maxime placeat cumque, harum illum deserunt sapiente soluta aliquam facere nisi ullam nobis dolores? Error distinctio, quo! Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+							</p>
+
+						</div>
+
+					</div>
 					<div class="fragment current-visible fixture" data-fixture="doppler-scale">
-						<h1 is-doppler-scale-target>TEST</h1>
+						<h1 class"paper" is-doppler-scale-target></h1>
 					</div>
-					<div class="fragment current-visible fixture" data-fixture="doppler-scroll">
-						<h1 is-doppler-scroll-target>DOCUMENT</h1>
-					</div>
+
 					<div class="visualizer visualizer--doppler" is-doppler-visualizer></div>
 				</section>
 
@@ -270,6 +307,7 @@
 		<!-- Demo utils -->
 		<script src="lib/js/doppler.js"></script>
 		<script src="lib/js/SignalViewer.js"></script>
+		<script src="lib/js/scrollto.js"></script>
 
 		<!-- Demo drivers -->
 		<script src="js/main.js"></script>

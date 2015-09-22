@@ -66,7 +66,7 @@
     },
 
     doScale: function(){
-      console.log('doscale')
+      console.log('Doppler Scale Demo Active')
       this.callback = function(bandwidth){
         var threshold = 4;
         var diff;
@@ -81,9 +81,38 @@
     },
 
     doScroll: function(){
-      console.log('doscroll')
-      this.callback = function(e){
-        console.log('scroll:', e)
+      console.log('Doppler Scroll Demo Active')
+      var isActive = false;
+      var delta = 15;
+      var threshold = 4;
+
+      var lastScroll = 0;
+      var minScroll = 0;
+      var maxScroll = this.scrollTarget.scrollHeight - this.scrollTarget.clientHeight;
+
+      this.callback = function(bandwidth){
+        var diff = 0;
+        var dur = 20;
+        var scale = 15;
+
+        if (isActive){
+          return;
+        }
+
+        if (bandwidth.left > threshold || bandwidth.right > threshold) {
+          diff = bandwidth.left - bandwidth.right;
+        }
+
+        if (diff > delta || diff < -1 * delta){
+          isActive = true;
+          lastScroll += diff * scale;
+          lastScroll = Math.min(Math.max(lastScroll, 0), maxScroll);
+          console.log('diff', diff)
+
+          scrollTo.call(this.scrollTarget, lastScroll, Math.abs(dur * diff) * 0.75, function(){
+            isActive = false;
+          })
+        }
       }
     }
   }
