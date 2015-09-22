@@ -16,14 +16,18 @@
   var sonicServer;
   var signalViewer;
 
-  document.querySelector('[data-toggle-frequency]')
+  document.querySelector('[is-toggle-frequency]')
     .addEventListener('change', onToggleFrequency);
 
-  document.querySelector('[data-toggle-visualizer]')
+  document.querySelector('[is-toggle-visualizer]')
     .addEventListener('change', onToggleVisualizer);
 
-  document.querySelector('[data-symbol-picker]')
+  document.querySelector('[is-toggle-mode]')
+    .addEventListener('change', onToggleMode);
+
+  document.querySelector('[is-symbol-picker]')
     .addEventListener('change', onPickSymbol);
+
 
   createSonicNetwork();
 
@@ -50,7 +54,7 @@
     var index = parseInt(message);
     // Validate the message -- it has to be a single valid index.
     var isValid = (!isNaN(index) && 0 <= index && index < EMOTICONS.length);
-    var preview = document.querySelector('[data-symbol-preview]');
+    var preview = document.querySelector('[is-symbol-preview]');
 
     if (isValid) {
       preview.className = EMOTICONS[index];
@@ -102,6 +106,27 @@
     } else {
       signalViewer.destroy();
       signalViewer = undefined;
+    }
+  }
+
+  function onToggleMode(e){
+    var value = e.target.form.elements.mode.value;
+    var prefix = "mode--";
+    var classList = document.documentElement.classList;
+
+    switch (value) {
+      case 'receive':
+        classList.add(prefix + value);
+        classList.remove(prefix + 'send');
+      break;
+
+      case 'send':
+        classList.add(prefix + value);
+        classList.remove(prefix + 'receive');
+      break;
+
+      default:
+        document.documentElement.removeAttribute('class');
     }
   }
 

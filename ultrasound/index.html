@@ -8,29 +8,48 @@
 </head>
 <body>
 
-    <form action="#" class="toggle toggle--freq" data-toggle-frequency>
-      <label for="freq-ultrasound" class="toggle__option">
-        <input type="radio" id="freq-ultrasound" name="freq" value="ultrasound" checked />
-        <span>Ultrasound</span>
-      </label>
-      <label for="freq-audible" class="toggle__option">
-        <input type="radio" id="freq-audible" name="freq" value="audible" />
-        <span>Audible</span>
-      </label>
-    </form>
+    <nav class="controls">
+      <form action="#" class="toggle toggle--freq" is-toggle-frequency>
+        <label for="freq-ultrasound" class="toggle__option">
+          <input type="radio" id="freq-ultrasound" name="freq" value="ultrasound" checked />
+          <span>Ultrasound</span>
+        </label>
+        <label for="freq-audible" class="toggle__option">
+          <input type="radio" id="freq-audible" name="freq" value="audible" />
+          <span>Audible</span>
+        </label>
+      </form>
 
-    <form action="#" class="toggle toggle--visualizer" data-toggle-visualizer>
-      <label for="visualizer" class="toggle__option">
-        <input type="checkbox" name="visualizer" id="visualizer" />
-        <span>Visualizer</span>
-      </label>
-    </form>
+      <form action="#" class="toggle toggle--mode" is-toggle-mode>
+        <label for="mode-send" class="toggle__option">
+          <input type="radio" id="mode-send" name="mode" value="send" />
+          <span>Send</span>
+        </label>
 
-    <div class="sonic-demo-wrapper">
+        <label for="mode-receive" class="toggle__option">
+          <input type="radio" id="mode-receive" name="mode" value="receive" />
+          <span>Receive</span>
+        </label>
 
-      <div id="symbol-preview" class="symbol--pending" data-symbol-preview></div>
+        <label for="mode-both" class="toggle__option">
+          <input type="radio" id="mode-both" name="mode" value="both" checked />
+          <span>Both</span>
+        </label>
+      </form>
 
-      <form action="#" class="symbol-container" data-symbol-picker>
+      <form action="#" class="toggle toggle--visualizer" is-toggle-visualizer>
+        <label for="visualizer" class="toggle__option">
+          <input type="checkbox" name="visualizer" id="visualizer" />
+          <span>Visualizer</span>
+        </label>
+      </form>
+    </nav>
+
+    <div class="symbol-wrapper">
+
+      <div id="symbol-preview" class="symbol--pending" is-symbol-preview></div>
+
+      <form action="#" class="symbol-picker" is-symbol-picker>
         <input type="radio" name="symbol" id="symbol-1" value="symbol--1" />
         <label for="symbol-1" class="symbol symbol--1"></label>
 
