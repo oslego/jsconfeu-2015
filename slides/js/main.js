@@ -9,7 +9,7 @@
 
   isDopplerDemo = function(){
     var slide = Reveal.getCurrentSlide();
-    if (slide.dataset.state == STATE_DOPPLER_DEMO){
+    if (slide.dataset.state == STATE_DOPPLER_DEMO || DopplerDemo.navigation == true){
       return true;
     } else {
       return false;
@@ -18,14 +18,24 @@
 
   var DopplerDemo = {
     viewer: undefined,
-    callback: undefined,
+    navigation: false,
+    onSample: undefined,
+    onPositive: undefined,
+    onNegative: undefined,
+    delay: 300, // milliseconds of delay between interpreting gestures
     host: document.querySelector('[is-doppler-visualizer]'),
     scaleTarget: document.querySelector('[is-doppler-scale-target]'),
     scrollTarget: document.querySelector('[is-doppler-scroll-target]'),
 
     create: function(){
+      if (this.viewer){
+        return;
+      }
+
       var buffer = [];
       var diff = 0;
+      var threshold = 15;
+      var isActive = false;
       var options = { min: -33, max: 33 };
       options = Object.assign(VISUALIZER_STYLES, options);
 
@@ -33,24 +43,50 @@
       this.viewer.create(this.host)
 
       doppler.start();
-      doppler.on('sample', onSample.bind(this));
+      doppler.on('sample', _onSample.bind(this));
 
-      function onSample(bandwidth){
-        var threshold = 4;
-        if (bandwidth.left > threshold || bandwidth.right > threshold) {
+      function _onSample(bandwidth){
+        // ignore frequency variations smaller than 4
+        if (bandwidth.left > 4 || bandwidth.right > 4) {
           diff = bandwidth.left - bandwidth.right;
         }
 
         buffer.push(diff);
+
         if (buffer.length >= 300){
           buffer.splice(0, 1);
         }
 
         this.viewer.render(buffer);
 
-        if (this.callback){
-          this.callback.call(this, bandwidth)
+        // trigger callbacks for full resolution data
+        if (this.onSample){
+          this.onSample.call(this, diff)
         }
+
+        // trigger callbacks for freq shift above a certain threshold
+        // throttle calls (see this.delay) with a boolean flag: isActive
+        if (isActive){
+          return;
+        }
+
+        if (diff > threshold || diff < -1 * threshold) {
+          isActive = true;
+
+          if (diff > threshold && this.onPositive) {
+            this.onPositive.call(this, diff)
+          }
+
+          if (diff < threshold && this.onNegative){
+            this.onNegative.call(this, diff)
+          }
+
+          // clear flag after delay so gestures can be sent again
+          setTimeout(function(){
+            isActive = false
+          }, this.delay)
+        }
+
       }
     },
 
@@ -60,20 +96,20 @@
       }
 
       this.viewer = undefined;
-      this.callback = undefined;
+      this.onSample = undefined;
+      this.onPositive = undefined;
+      this.onNegative = undefined;
+
       this.host.innerHTML = '';
       console.warn('remove Doppler demo!')
     },
 
     doScale: function(){
+      if (this.navigation){
+        return;
+      }
       console.log('Doppler Scale Demo Active')
-      this.callback = function(bandwidth){
-        var threshold = 4;
-        var diff;
-        if (bandwidth.left > threshold || bandwidth.right > threshold) {
-          diff = bandwidth.left - bandwidth.right;
-        }
-
+      this.onSample = function(diff){
         if (diff > 15 || diff < 15){
           this.scaleTarget.style.transform = 'scale('+ Math.abs(diff / 10) + ')'
         }
@@ -81,29 +117,26 @@
     },
 
     doScroll: function(){
+      if (this.navigation){
+        return;
+      }
       console.log('Doppler Scroll Demo Active')
       var isActive = false;
-      var delta = 15;
-      var threshold = 4;
+      var threshold = 15;
 
       var lastScroll = 0;
       var minScroll = 0;
       var maxScroll = this.scrollTarget.scrollHeight - this.scrollTarget.clientHeight;
 
-      this.callback = function(bandwidth){
-        var diff = 0;
-        var dur = 20;
-        var scale = 15;
-
+      this.onSample = function(diff){
         if (isActive){
           return;
         }
 
-        if (bandwidth.left > threshold || bandwidth.right > threshold) {
-          diff = bandwidth.left - bandwidth.right;
-        }
+        var dur = 20;
+        var scale = 15;
 
-        if (diff > delta || diff < -1 * delta){
+        if (diff > threshold || diff < -1 * threshold){
           isActive = true;
           lastScroll += diff * scale;
           lastScroll = Math.min(Math.max(lastScroll, 0), maxScroll);
@@ -114,6 +147,27 @@
           })
         }
       }
+    },
+
+    doNavigation: function(){
+      if (this.navigation){
+        console.log('toggle off!')
+        this.callback = undefined;
+        this.navigation = false;
+
+        // TODO: figure out if this needs to be here?
+        // doppler.stop()
+        return;
+      }
+
+      console.log('Doppler Slide Navigation Demo Active')
+
+      this.navigation = true;
+
+      // Handlers for freq shift events
+      this.onSample = undefined;
+      this.onPositive = Reveal.next;
+      this.onNegative = Reveal.prev;
     }
   }
 
@@ -142,5 +196,12 @@
       break;
     }
   } );
+
+	Reveal.configure({
+		keyboard: {
+			// N key
+			78: DopplerDemo.doNavigation.bind(DopplerDemo)
+		}
+	});
 
 })()
