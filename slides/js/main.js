@@ -100,7 +100,6 @@
       this.onPositive = undefined;
       this.onNegative = undefined;
 
-      this.host.innerHTML = '';
       console.warn('remove Doppler demo!')
     },
 
