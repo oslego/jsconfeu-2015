@@ -161,7 +161,9 @@
 
       if (this.navigation){
         console.log('toggle off!')
-        this.callback = undefined;
+        this.onSample = undefined;
+        this.onPositive = undefined;
+        this.onNegative = undefined;
         this.navigation = false;
 
         // TODO: figure out if this needs to be here?
