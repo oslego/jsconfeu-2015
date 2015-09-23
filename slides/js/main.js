@@ -9,13 +9,18 @@
     fontColor: '#fa0'
   }
 
-  isDopplerDemo = function(){
+  function isDopplerDemo(){
     var slide = Reveal.getCurrentSlide();
     if (slide.dataset.state == STATE_DOPPLER_DEMO || DopplerDemo.navigation == true){
       return true;
     } else {
       return false;
     }
+  }
+
+  function isDeviceLightDemo(){
+    var slide = Reveal.getCurrentSlide();
+    return (slide.dataset.state == STATE_DEVICELIGHT_DEMO);
   }
 
   var DopplerDemo = {
@@ -207,6 +212,7 @@
       var options = { min: 30, max: 1000 };
       options = Object.assign(VISUALIZER_STYLES, options);
 
+      var host = document.querySelector('section.present [is-devicelight-visualizer]');
       this.viewer = SignalViewer(options);
       this.viewer.create(host);
 
@@ -229,59 +235,19 @@
         this.viewer.setConfig(options);
       }.bind(this), 300);
 
-      }.bind(this), 300)
-
-      function _onSample(value, buffer){
-        this.viewer.render(buffer);
-      }
-
-      sampler.on('sample', _onSample.bind(this));
+      console.warn('DeviceLightDemo ON')
     },
 
     remove: function(){
-      if (this.viewer){
+      if (this.viewer || this.sampler){
         this.viewer.destroy();
+        this.sampler.stop()
+
+        this.viewer = undefined;
+        this.sampler = undefined;
+
+        console.warn('DeviceLightDemo OFF')
       }
-
-      this.viewer = undefined;
-
-      console.warn('remove DeviceLight demo!')
-    }
-  }
-
-  function DeviceLightSampler(params){
-    if (!(this instanceof DeviceLightSampler)){
-      return new DeviceLightSampler();
-    }
-
-    params = params || {};
-    var maxLength = params.bufferLength || 240;
-
-    var callbacks = {};
-    var buffer = [];
-    var loop;
-    var lux;
-    var scope = this;
-
-    this.average = 50;
-
-    function _onLightChange(e){
-      lux = event.value;
-    }
-
-    function _sample(){
-      buffer.push(lux);
-      if (buffer.length >= maxLength){
-        buffer.splice(0, 1);
-      }
-
-      if (typeof callbacks.sample == 'function'){
-        callbacks.sample.call(scope, lux, buffer);
-      }
-
-      _calculateAverage()
-
-      loop = window.requestAnimationFrame(_sample);
     }
   }
 
@@ -292,6 +258,10 @@
     if (doppler.isActive() && !isDopplerDemo()){
       doppler.stop()
       DopplerDemo.remove();
+    }
+
+    if (!isDeviceLightDemo()){
+      DeviceLightDemo.remove();
     }
   }, false );
 
