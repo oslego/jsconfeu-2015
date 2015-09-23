@@ -1,5 +1,7 @@
 (function(){
   var STATE_DOPPLER_DEMO = 'doppler-demo';
+  var STATE_DEVICELIGHT_DEMO = 'devicelight-demo';
+
   var VISUALIZER_STYLES = {
     lineWidth: 5,
     lineColor: '#fa0',
@@ -194,7 +196,125 @@
     }
   }
 
-  Reveal.addEventListener( STATE_DOPPLER_DEMO, DopplerDemo.create.bind(DopplerDemo))
+  var DeviceLightDemo = {
+    viewer: undefined,
+    loop: undefined,
+    host: document.querySelector('[is-devicelight-visualizer]'),
+    create: function(){
+      if (this.viewer){
+        return;
+      }
+
+      // TODO: calibrate!
+      var options = { min: 30, max: 1000 };
+      options = Object.assign(VISUALIZER_STYLES, options);
+
+      this.viewer = SignalViewer(options);
+      this.viewer.create(this.host);
+
+      var sampler = DeviceLightSampler();
+
+      // calibration
+      setTimeout(function(){
+        var avg = sampler.average;
+        var options = {
+          min: avg * 0.9,
+          max: avg + 2000
+        }
+
+        console.log('calibrated at: ', options);
+
+        this.viewer.setConfig(options);
+
+      }.bind(this), 300)
+
+      function _onSample(value, buffer){
+        this.viewer.render(buffer);
+      }
+
+      sampler.on('sample', _onSample.bind(this));
+    },
+
+    remove: function(){
+      if (this.viewer){
+        this.viewer.destroy();
+      }
+
+      this.viewer = undefined;
+
+      console.warn('remove DeviceLight demo!')
+    }
+  }
+
+  function DeviceLightSampler(params){
+    if (!(this instanceof DeviceLightSampler)){
+      return new DeviceLightSampler();
+    }
+
+    params = params || {};
+    var maxLength = params.bufferLength || 240;
+
+    var callbacks = {};
+    var buffer = [];
+    var loop;
+    var lux;
+    var scope = this;
+
+    this.average = 50;
+
+    function _onLightChange(e){
+      lux = event.value;
+    }
+
+    function _sample(){
+      buffer.push(lux);
+      if (buffer.length >= maxLength){
+        buffer.splice(0, 1);
+      }
+
+      if (typeof callbacks.sample == 'function'){
+        callbacks.sample.call(scope, lux, buffer);
+      }
+
+      _calculateAverage()
+
+      loop = window.requestAnimationFrame(_sample);
+    }
+
+    function _calculateAverage(){
+      var len = buffer.length;
+      var sum = 0;
+
+      while (len--){
+        sum += buffer[len];
+      }
+
+      scope.average = sum / buffer.length || scope.average;
+    }
+
+    this.on = function(event, callback){
+      if (event === 'sample'){
+        callbacks.sample = callback;
+      }
+    }
+
+    this.stop = function(){
+      buffer.length = 0;
+      loop = window.cancelAnimationFrame(_sample);
+      this.average = 0;
+      window.removeEventListener('devicelight', _onLightChange);
+    }
+
+    this.start = function(){
+      _sample();
+      window.addEventListener('devicelight', _onLightChange);
+    }
+
+    this.start();
+  }
+
+  Reveal.addEventListener( STATE_DOPPLER_DEMO, DopplerDemo.create.bind(DopplerDemo));
+  Reveal.addEventListener( STATE_DEVICELIGHT_DEMO, DeviceLightDemo.create.bind(DeviceLightDemo));
 
   Reveal.addEventListener( 'slidechanged', function(e) {
     if (doppler.isActive() && !isDopplerDemo()){
