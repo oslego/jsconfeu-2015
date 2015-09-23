@@ -216,6 +216,24 @@
       this.viewer = SignalViewer(options);
       this.viewer.create(host);
 
+      var morseSignalEl = document.querySelector('[is-morse-signal]');
+      var morseOutputEl = document.querySelector('[is-morse-output]');
+
+      var server = new OpticalServer();
+      server.on('character', function(char){
+        morseOutputEl.textContent += char;
+
+        // reset signal on message
+        morseSignalEl.textContent = '';
+
+        console.info('Incoming: ', char)
+      })
+
+      server.on('signal', function(signal){
+        morseSignalEl.textContent += signal;
+        console.info('Signal: ', signal)
+      })
+
       this.sampler = DeviceLightSampler();
 
       function _onSample(value, buffer){
