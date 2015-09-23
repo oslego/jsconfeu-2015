@@ -19,7 +19,10 @@ function DeviceLightSampler(params){
   }
 
   function _sample(){
-    buffer.push(lux);
+    if (lux){
+      buffer.push(lux);
+    }
+
     if (buffer.length >= maxLength){
       buffer.splice(0, 1);
     }
