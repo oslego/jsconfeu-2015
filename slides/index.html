@@ -213,10 +213,23 @@
 					<p>Stretch goal: toggle styles on document</p>
 				</section>
 
-				<section>
-					<h2>Optical Morse Code</h2>
-					<p>Demo: torch app + DeviceLight</p>
+				<section data-state="devicelight-demo">
+					<h2>DeviceLight Optical Morse Code</h2>
+
+					<div class="demo demo--morse">
+						<div class="output output--morse">
+							<span class="label">Morse character:</span>
+							<div class="output__box" is-morse-char>.-.-.-.</div>
+						</div>
+
+						<div class="output output--message">
+							<span class="label">Decoded message:</span>
+							<div class="output__box" is-morse-output>JSCONF</div>
+						</div>
+					</div>
+					<div class="visualizer visualizer--morse" is-devicelight-visualizer></div>
 				</section>
+
 
 				<section>
 					<p>Privacy implications: fingerprinting</p>
@@ -377,6 +390,7 @@
 		<!-- Demo utils -->
 		<script src="lib/js/doppler.js"></script>
 		<script src="lib/js/SignalViewer.js"></script>
+		<script src="lib/js/DeviceLightSampler.js"></script>
 		<script src="lib/js/scrollto.js"></script>
 
 		<!-- Demo drivers -->
