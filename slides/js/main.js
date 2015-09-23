@@ -198,33 +198,36 @@
 
   var DeviceLightDemo = {
     viewer: undefined,
-    loop: undefined,
-    host: document.querySelector('[is-devicelight-visualizer]'),
+    sampler: undefined,
     create: function(){
       if (this.viewer){
         return;
       }
 
-      // TODO: calibrate!
       var options = { min: 30, max: 1000 };
       options = Object.assign(VISUALIZER_STYLES, options);
 
       this.viewer = SignalViewer(options);
-      this.viewer.create(this.host);
+      this.viewer.create(host);
 
-      var sampler = DeviceLightSampler();
+      this.sampler = DeviceLightSampler();
+
+      function _onSample(value, buffer){
+        this.viewer.render(buffer);
+      }
+
+      this.sampler.on('sample', _onSample.bind(this));
 
       // calibration
       setTimeout(function(){
-        var avg = sampler.average;
+        var avg = this.sampler.average;
         var options = {
           min: avg * 0.9,
           max: avg + 2000
         }
-
         console.log('calibrated at: ', options);
-
         this.viewer.setConfig(options);
+      }.bind(this), 300);
 
       }.bind(this), 300)
 
@@ -280,37 +283,6 @@
 
       loop = window.requestAnimationFrame(_sample);
     }
-
-    function _calculateAverage(){
-      var len = buffer.length;
-      var sum = 0;
-
-      while (len--){
-        sum += buffer[len];
-      }
-
-      scope.average = sum / buffer.length || scope.average;
-    }
-
-    this.on = function(event, callback){
-      if (event === 'sample'){
-        callbacks.sample = callback;
-      }
-    }
-
-    this.stop = function(){
-      buffer.length = 0;
-      loop = window.cancelAnimationFrame(_sample);
-      this.average = 0;
-      window.removeEventListener('devicelight', _onLightChange);
-    }
-
-    this.start = function(){
-      _sample();
-      window.addEventListener('devicelight', _onLightChange);
-    }
-
-    this.start();
   }
 
   Reveal.addEventListener( STATE_DOPPLER_DEMO, DopplerDemo.create.bind(DopplerDemo));
