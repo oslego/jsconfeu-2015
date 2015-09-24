@@ -204,9 +204,14 @@
   var DeviceLightDemo = {
     viewer: undefined,
     sampler: undefined,
+    server: undefined,
     create: function(){
       if (this.viewer){
         return;
+      }
+
+      function _onSample(value, buffer){
+        this.viewer.render(buffer);
       }
 
       var options = { min: 30, max: 1000 };
@@ -216,42 +221,24 @@
       this.viewer = SignalViewer(options);
       this.viewer.create(host);
 
-      var morseSignalEl = document.querySelector('[is-morse-signal]');
-      var morseOutputEl = document.querySelector('[is-morse-output]');
-
-      var server = new OpticalServer();
-      server.on('character', function(char){
-        morseOutputEl.textContent += char;
-
-        // reset signal on message
-        morseSignalEl.textContent = '';
-
-        console.info('Incoming: ', char)
-      })
-
-      server.on('signal', function(signal){
-        morseSignalEl.textContent += signal;
-        console.info('Signal: ', signal)
-      })
-
       this.sampler = DeviceLightSampler();
-
-      function _onSample(value, buffer){
-        this.viewer.render(buffer);
-      }
-
       this.sampler.on('sample', _onSample.bind(this));
 
-      // calibration
+      // Calibrate min/max light level for visualizer
       setTimeout(function(){
         var avg = this.sampler.average;
         var options = {
           min: avg * 0.9,
           max: avg + 2000
         }
-        console.log('calibrated at: ', options);
         this.viewer.setConfig(options);
       }.bind(this), 300);
+
+      var isMorseDemo = document.querySelector('section.present .demo--morse') || false;
+
+      if (isMorseDemo){
+        this.doMorse();
+      }
 
       console.warn('DeviceLightDemo ON')
     },
@@ -263,9 +250,36 @@
 
         this.viewer = undefined;
         this.sampler = undefined;
-
         console.warn('DeviceLightDemo OFF')
       }
+
+      if (this.server){
+        this.server.disarm();
+        this.server == undefined;
+      }
+    },
+
+    doMorse: function(){
+      var morseSignalEl = document.querySelector('[is-morse-signal]');
+      var morseOutputEl = document.querySelector('[is-morse-output]');
+
+      this.server = new OpticalServer();
+
+      this.server.on('character', function(char){
+        morseOutputEl.textContent += char;
+        morseSignalEl.textContent = '';
+        console.info('Incoming: ', char)
+      })
+
+      this.server.on('signal', function(signal){
+        morseSignalEl.textContent += signal;
+        console.info('Signal: ', signal)
+      })
+
+      this.server.on('start', function(){
+        morseSignalEl.textContent = '';
+        morseOutputEl.textContent = '';
+      });
     }
   }
 

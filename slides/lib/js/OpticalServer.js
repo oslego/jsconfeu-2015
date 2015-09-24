@@ -73,7 +73,8 @@
     }
     this.buffer = []; // temp array of morse code symbols as they are decoded
     this.mode; // current mode, one of "light" or "dark"
-    this.isRunning = false; // flag for monitoring light variation as morse code
+    this.isRunning = false; // if false, light pulses will not be processed as Morse Code
+    this.isArmed = true;    // if true react to lux > luxThreshold and begin monitoring for light variation
     this.lastTime; // UTC time (milliseconds) when mode last changed between "dark" and "light"
     this.lux = 0; // last known lux value from 'devicelight' event
 
@@ -105,6 +106,11 @@
   OpticalServer.prototype.onLightChange = function(e){
     this.lux = e.value;
 
+    // Disarmed server; do not start monitoring
+    if (this.isArmed == false){
+      return;
+    }
+
     if (this.isRunning == false && this.lux >= this.luxThreshold){
       this.start();
       console.warn('Monitoring ON!')
@@ -112,15 +118,13 @@
   };
 
   OpticalServer.prototype.on = function(event, callback) {
-    if (event === "character"){
-      this.callbacks.character = callback;
-    }
-    if (event === "signal"){
-      this.callbacks.signal = callback;
+    if (typeof event == 'string'){
+      this.callbacks[event] = callback;
     }
   }
 
-  OpticalServer.prototype.fire = function(callback, arg) {
+  OpticalServer.prototype.fire = function(event, arg) {
+    var callback = this.callbacks[event];
     if (typeof(callback) === 'function') {
       callback(arg);
     }
@@ -132,14 +136,26 @@
     this.mode = this.modes.LIGHT;
     this.wordBreakCount = 0;
     this.buffer.length = 0;
-
     this.loop();
+    this.fire('start');
   }
 
   OpticalServer.prototype.stop = function() {
     console.warn('Monitoring OFF!')
     this.isRunning = false;
     this.timeout = clearTimeout(this.timeout);
+  }
+
+  OpticalServer.prototype.arm = function() {
+    console.warn('Optical Server ARMED')
+    this.isArmed = true;
+    this.fire('arm')
+  }
+
+  OpticalServer.prototype.disarm = function() {
+    console.warn('Optical Server DISARMED')
+    this.isArmed = false;
+    this.fire('disarm')
   }
 
   OpticalServer.prototype.loop = function() {
@@ -209,7 +225,7 @@
             if (!char) {
               console.error('Unknown character for code:', this.buffer.join(''));
             } else {
-              this.fire(this.callbacks.character, char);
+              this.fire('character', char);
 
               // reset consecutive word break count
               this.wordBreakCount = 0;
@@ -239,7 +255,7 @@
               } else {
                 // include space after last char of word
                 char = char + " ";
-                this.fire(this.callbacks.character, char);
+                this.fire('character', char);
                 this.wordBreakCount = 0;
               }
 
@@ -264,7 +280,7 @@
         if (duration <= this.times.dot * 1.25) {
           op = function() {
             this.buffer.push('.');
-            this.fire(this.callbacks.signal, '.');
+            this.fire('signal', '.');
 
             return "OP_DOT";
           }
@@ -273,7 +289,7 @@
         if (duration >= this.times.dash * 0.75) {
           op = function() {
             this.buffer.push('-');
-            this.fire(this.callbacks.signal, '-');
+            this.fire('signal', '-');
 
             return "OP_DASH";
           }
