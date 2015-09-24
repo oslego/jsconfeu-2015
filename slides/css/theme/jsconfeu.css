@@ -274,20 +274,37 @@ body {
   height: 500px; }
   .reveal .visualizer canvas {
     -webkit-mask: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #ffffff 7%); }
-  .reveal .visualizer--doppler {
+  .reveal .visualizer--doppler, .reveal .visualizer--devicelight-paper {
     transition: transform 1s cubic-bezier(0, 0, 0.2, 1);
     transform-origin: top right;
     position: absolute;
     top: 0;
     pointer-events: none; }
-    .reveal .visualizer--doppler:before {
-      content: "Frequency Shift";
+    .reveal .visualizer--doppler::before, .reveal .visualizer--devicelight-paper::before {
       font-family: 'Lato', Helvetica, sans-serif;
       font-weight: 900;
       font-size: 1.6em;
       transition: opacity 0.25s cubic-bezier(0, 0, 0.2, 1); }
+  .reveal .visualizer--doppler::before {
+    content: "Frequency Shift"; }
+  .reveal .visualizer--devicelight-paper::before {
+    content: "Ambient Light Events"; }
   .reveal .visualizer--morse {
     height: 300px; }
+.reveal .demo .current-fragment ~ .visualizer {
+  transform: scale(0.75) translatey(-100px); }
+  .reveal .demo .current-fragment ~ .visualizer:before {
+    opacity: 0; }
+  .reveal .demo .current-fragment ~ .visualizer canvas {
+    -webkit-mask: linear-gradient(90deg, rgba(0, 0, 0, 0) 50%, #ffffff 57%); }
+.reveal .demo .fixture {
+  position: absolute;
+  width: 55%;
+  height: 600px; }
+.reveal .demo .illustration {
+  height: 100%;
+  fill: white;
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1); }
 .reveal .demo--morse {
   display: flex;
   flex-flow: row wrap;
@@ -316,21 +333,6 @@ body {
     font-size: 0.8em;
     margin-bottom: 0.3em;
     font-weight: 300; }
-
-.demo--doppler .current-fragment ~ .visualizer {
-  transform: scale(0.75) translatey(-100px); }
-  .demo--doppler .current-fragment ~ .visualizer:before {
-    opacity: 0; }
-  .demo--doppler .current-fragment ~ .visualizer canvas {
-    -webkit-mask: linear-gradient(90deg, rgba(0, 0, 0, 0) 50%, #ffffff 57%); }
-.demo--doppler .fixture {
-  position: absolute;
-  width: 55%;
-  height: 600px; }
-.demo--doppler .illustration {
-  height: 100%;
-  fill: white;
-  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1); }
 
 iframe.paper {
   width: 80%;

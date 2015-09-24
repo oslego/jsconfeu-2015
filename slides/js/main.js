@@ -230,7 +230,7 @@
       setTimeout(function(){
         var avg = this.sampler.average;
         var options = {
-          min: avg * 0.9,
+          min: avg * 0.8,
           max: avg + 2000
         }
         this.viewer.setConfig(options);
@@ -282,6 +282,26 @@
         morseSignalEl.textContent = '';
         morseOutputEl.textContent = '';
       });
+    },
+
+    doPaper: function(){
+      var paperIframe = document.querySelector('[is-devicelight-paper-target]');
+      var paperEl = paperIframe.contentWindow.document.documentElement;
+      var luxThreshold = 15;
+
+      // Calibrate lux value below which light is considered dim.
+      // Very permissive for demo purposes.
+      setTimeout(function(){
+        luxThreshold = Math.max(luxThreshold, this.sampler.average / 2);
+      }.bind(this), 300);
+
+      window.addEventListener('devicelight', function(e){
+        if (e.value < luxThreshold){
+          paperEl.classList.add('dark')
+        } else {
+          paperEl.classList.remove('dark')
+        }
+      }.bind(this));
     }
   }
 
@@ -312,6 +332,10 @@
 
       case 'doppler-scroll':
         DopplerDemo.doScroll();
+      break;
+
+      case 'devicelight-paper':
+        DeviceLightDemo.doPaper();
       break;
     }
   } );

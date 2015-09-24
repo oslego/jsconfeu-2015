@@ -117,7 +117,7 @@
 					</a>
 				</section>
 
-				<section class="demo--doppler" data-state="doppler-demo">
+				<section class="demo demo--doppler" data-state="doppler-demo">
 					<div class="fragment current-visible fixture" data-fixture="doppler-scale">
 						<svg class="illustration" is-doppler-scale-target>
 							<use xlink:href="#balloon-icon"></use>
@@ -159,19 +159,21 @@
 					</aside>
 				</section>
 
-				<section data-state="devicelight-demo">
-					<h2>DeviceLight API</h2>
-					<div class="visualizer visualizer--devicelight" is-devicelight-visualizer></div>
+				<section class="demo demo--devicelight" data-state="devicelight-demo">
+					<!-- <h2>DeviceLight event</h2> -->
+					<div class="fragment current-visible fixture" data-fixture="devicelight-paper">
+						<iframe src="paper.html" frameborder="0" class="paper" is-devicelight-paper-target></iframe>
+					</div>
+
+					<div class="visualizer visualizer--devicelight-paper" is-devicelight-visualizer></div>
 				</section>
 
 				<section>
-					<p>Demo: LUX visualizer</p>
-					<p>Code snippet</p>
-					<p>Stretch goal: toggle styles on document</p>
+					<h1>Ambient Light Events <br>+<br>Morse Code</h1>
 				</section>
 
 				<section data-state="devicelight-demo">
-					<h2>DeviceLight Optical Morse Code</h2>
+					<h2>Optical Morse Code</h2>
 
 					<div class="demo demo--morse">
 						<div class="output output--morse">
