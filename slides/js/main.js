@@ -138,9 +138,12 @@
       var isActive = false;
       var threshold = 15;
 
+      // reach into the iframe for the element to scroll
+      var scrollTarget = this.scrollTarget.contentWindow.document.documentElement;
+
       var lastScroll = 0;
       var minScroll = 0;
-      var maxScroll = this.scrollTarget.scrollHeight - this.scrollTarget.clientHeight;
+      var maxScroll = scrollTarget.scrollHeight - scrollTarget.clientHeight;
 
       this.onSample = function(diff){
         if (isActive){
@@ -154,9 +157,8 @@
           isActive = true;
           lastScroll += diff * scale;
           lastScroll = Math.min(Math.max(lastScroll, 0), maxScroll);
-          console.log('diff', diff)
 
-          scrollTo.call(this.scrollTarget, lastScroll, Math.abs(dur * diff) * 0.75, function(){
+          scrollTo.call(scrollTarget, lastScroll, Math.abs(dur * diff) * 0.75, function(){
             isActive = false;
           })
         }

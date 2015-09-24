@@ -332,35 +332,10 @@ body {
   fill: white;
   transition: transform 300ms cubic-bezier(0, 0, 0.2, 1); }
 
-.reveal div.paper {
-  box-sizing: border-box;
-  background: white;
+iframe.paper {
+  width: 80%;
   height: 100%;
-  overflow-y: auto;
-  box-shadow: 8px 8px 10px 3px rgba(0, 0, 0, 0.48);
-  padding: 1em 1.3em 0.5em;
-  text-align: left; }
-  .reveal div.paper .paper__title {
-    color: #444;
-    font-size: 1em;
-    display: block;
-    margin: 0 0 0.75em 0;
-    font-weight: 700; }
-    .reveal div.paper .paper__title--h2 {
-      font-size: 0.75em;
-      margin-bottom: 0.75em; }
-  .reveal div.paper * {
-    font-size: 20px;
-    margin: 0 0 2em 0;
-    line-height: 1.6;
-    color: #aaa;
-    /* font-family: 'Ahem', sans-serif; */ }
-  .reveal div.paper ul {
-    list-style: inside;
-    width: 100%; }
-  .reveal div.paper li {
-    margin-bottom: 0.5em;
-    width: 100%; }
+  box-shadow: 8px 8px 10px 3px rgba(0, 0, 0, 0.48); }
 
 html::before {
   display: block;
