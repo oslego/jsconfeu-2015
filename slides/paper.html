@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"  class="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>Sample Document</title>
+  <style>
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .dark h1,
+  .dark h2{
+    color: navajowhite;
+  }
+
+  .dark * {
+    color: #A7A7A7;
+  }
+
+  .dark body{
+    background: #333;
+  }
+
+  body{
+    font-family: "Helvetica", Arial, sans-serif;
+    font-size: 130%;
+		background: white;
+    color: #aaa;
+  }
+
+  article{
+		padding: 1em 1.3em 0.5em;
+	}
+
+  article * {
+		margin: 0 0 2em 0;
+		line-height: 1.6;
+	}
+
+  ul{
+    list-style: inside;
+  }
+
+  li{
+    margin-bottom: 0.5em;
+  }
+
+  h1, h2{
+    color: #444;
+    margin: 0 0 1em 0;
+  }
+
+  h2{
+    font-size: 1.2em;
+  }
+
+  p:last-of-type{
+    position: relative;
+    margin-bottom: 3em;
+  }
+
+  /* Tombstone */
+  p:last-of-type::after{
+    content: " ";
+    display: block;
+    background: #444;
+    position: absolute;
+    bottom: -2em;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 0.75em;
+    height: 0.75em;
+  }
+
+  </style>
+</head>
+<body>
+  <article>
+    <h1>Document Title</h1>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam nisi repellat minima at architecto dolore, ipsa unde, nulla fugiat aliquid perspiciatis.
+    </p>
+
+    <ul>
+      <li>Corporis perspiciatis</li>
+      <li>Aperiam nisi</li>
+      <li>Error distinctio</li>
+    </ul>
+
+    <h2>First Heading</h2>
+
+    <p>
+      Corporis perspiciatis, iure ab, nemo maxime placeat cumque, harum illum deserunt sapiente soluta aliquam facere nisi ullam nobis dolores? Error distinctio, quo! Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+    </p>
+
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic voluptatum, delectus ratione ab consectetur eum adipisci.
+    </p>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam sequi dolores fugiat, aliquam itaque. Ratione veritatis aliquam quasi voluptates fugit fuga! Sapiente earum ea quibusdam, consequatur velit alias adipisci aut. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis molestiae accusantium qui suscipit illo! Quam voluptas, veniam sapiente! Nulla eius, facere nihil provident, obcaecati et eligendi magnam cupiditate iste odit.</p>
+
+    <h2>Second Heading</h2>
+
+    <ul>
+      <li>Quam voluptas</li>
+      <li>Error distinctio</li>
+      <li>Aperiam nisi</li>
+    </ul>
+
+    <p>
+      Corporis perspiciatis, iure ab, nemo maxime placeat cumque, harum illum deserunt sapiente soluta aliquam facere nisi ullam nobis dolores? Error distinctio, quo! Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+    </p>
+  </article>
+</body>
+</html>
