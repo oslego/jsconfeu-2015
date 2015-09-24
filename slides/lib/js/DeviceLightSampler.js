@@ -9,7 +9,7 @@ function DeviceLightSampler(params){
   var callbacks = {};
   var buffer = [];
   var loop;
-  var lux;
+  var lux = 50;
   var scope = this;
 
   this.average = 50;
