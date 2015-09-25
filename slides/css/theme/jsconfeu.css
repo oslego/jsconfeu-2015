@@ -376,6 +376,41 @@ html.doppler-navigation::before {
   font-weight: 300; }
 .reveal h2.topic {
   text-align: left; }
+  .reveal h2.topic em {
+    color: #fa0;
+    font-style: normal; }
+.reveal .ultrasound-encoding {
+  list-style: none;
+  font-size: 3.25em;
+  font-weight: 900;
+  text-align: left;
+  margin: 0;
+  width: 70%; }
+  .reveal .ultrasound-encoding li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    .reveal .ultrasound-encoding li .illustration {
+      width: 400px;
+      height: 200px;
+      background: url(../../images/wave/signal1.png) left center no-repeat;
+      background-size: auto 100%; }
+  .reveal .ultrasound-encoding li:nth-child(1) .illustration {
+    background-image: url(../../images/wave/signal1.png); }
+  .reveal .ultrasound-encoding li:nth-child(2) .illustration {
+    background-image: url(../../images/wave/signal2.png); }
+  .reveal .ultrasound-encoding li:nth-child(3) .illustration {
+    background-image: url(../../images/wave/signal3.png); }
+
+.google-tone h1 {
+  animation: fadeout 1s ease-out;
+  animation-delay: 2.5s;
+  animation-fill-mode: forwards;
+  opacity: 1; }
+
+@keyframes fadeout {
+  to {
+    opacity: 0; } }
 
 .reveal section img {
   margin: 0 0px;
