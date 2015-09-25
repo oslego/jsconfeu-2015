@@ -58,6 +58,7 @@
 
     if (isValid) {
       preview.className = EMOTICONS[index];
+      document.querySelector('[value="' + EMOTICONS[index] + '"]').checked = true;
     } else {
       preview.className = PLACEHOLDER;
     }
