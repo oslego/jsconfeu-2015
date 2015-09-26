@@ -371,6 +371,49 @@ html.doppler-navigation::before{
 		}
 	}
 
+
+html.bio::after{
+	content: '';
+	display: block;
+	width: 5em;
+	height: 10em;
+	background: url(./resources/adobelogo.svg) top center no-repeat;
+	background-size: cover;
+	position: absolute;
+	top: -1px;
+	right: 4em;
+}
+
+.reveal {
+
+	#bio{
+		ul{
+			list-style: none;
+			margin: 0;
+			text-align: left;
+			margin-left: 0;
+			display: block;
+			flex: 1 0 0;
+			max-width: 50%;
+		}
+
+		li{
+			font-size: $heading3Size;
+		}
+
+		h1{
+			text-align: left;
+		}
+
+		img{
+			position: absolute;
+			top: 4.3em;
+			right: -3em;
+			border: 1px solid #ddd;
+		}
+	}
+}
+
 /* .reveal div.credit{
 	position: fixed;
 	bottom: 0;
