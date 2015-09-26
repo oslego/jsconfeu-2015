@@ -231,7 +231,7 @@
         var avg = this.sampler.average;
         var options = {
           min: avg * 0.8,
-          max: avg + 2000
+          max: avg + 3000
         }
         this.viewer.setConfig(options);
       }.bind(this), 300);
