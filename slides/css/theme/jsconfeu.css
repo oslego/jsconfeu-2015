@@ -521,13 +521,7 @@ html.bio::after {
   right: -3em;
   border: 1px solid #ddd; }
 
-/* .reveal div.credit{
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	top: 0;
-	height: 1em;
-	background: black;
-	font-size: 0.5em;
-}
- */
+.reveal ul.credits {
+  list-style: none;
+  margin-left: 0;
+  font-size: 0.5em; }
