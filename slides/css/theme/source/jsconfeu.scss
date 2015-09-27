@@ -418,4 +418,20 @@ html.bio::after{
 	list-style: none;
 	margin-left: 0;
 	font-size: 0.5em;
+	position: relative;
+	margin-left: 10em;
+	padding-left: 2em;
+	border-left: 1px solid rgba(255,255,255,0.5);
+
+	&::before{
+		content: "Credits";
+		position: absolute;
+		font-size: $heading2Size;
+		left: -5em;
+	}
+
+	* {
+		color: white;
+		opacity: 0.75;
+	}
 }

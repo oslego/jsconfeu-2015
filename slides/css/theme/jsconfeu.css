@@ -524,4 +524,16 @@ html.bio::after {
 .reveal ul.credits {
   list-style: none;
   margin-left: 0;
-  font-size: 0.5em; }
+  font-size: 0.5em;
+  position: relative;
+  margin-left: 10em;
+  padding-left: 2em;
+  border-left: 1px solid rgba(255, 255, 255, 0.5); }
+  .reveal ul.credits::before {
+    content: "Credits";
+    position: absolute;
+    font-size: 1.6em;
+    left: -5em; }
+  .reveal ul.credits * {
+    color: white;
+    opacity: 0.75; }
